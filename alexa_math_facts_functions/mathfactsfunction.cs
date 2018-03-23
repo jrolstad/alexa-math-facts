@@ -20,7 +20,7 @@ namespace alexa_math_facts_functions
             var requestData = req.Content.ReadAsAsync<AlexaServiceRequest>().Result;
 
             var intentName = requestData?.request?.intent?.name;
-            var outputSpeech = GetSpeechResponse(intentName);
+            var outputSpeech = "Hello Liam";
             var response = AlexaServiceResponse.CreateOutputSpeechResponse(intentName, outputSpeech);
 
             return req.CreateResponse(HttpStatusCode.OK, response);

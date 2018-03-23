@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace alexamathfacts.Application
+namespace alexamathfunctions.application
 {
     public class AlexaServiceResponse
     {

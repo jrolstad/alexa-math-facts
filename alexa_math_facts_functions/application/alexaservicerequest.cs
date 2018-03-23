@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace alexamathfacts.Application
+namespace alexamathfunctions.application
 {
     public class AlexaServiceRequest
     {
