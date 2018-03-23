@@ -1,9 +1,9 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
-using alexamathfunctions.application;
 
 namespace alexa_math_facts_functions
 {
@@ -17,13 +17,37 @@ namespace alexa_math_facts_functions
             TraceWriter log)
         {
 
-            var requestData = req.Content.ReadAsAsync<AlexaServiceRequest>().Result;
+            var requestData = req.Content.ReadAsAsync<AlexaAPI.Request.SkillRequest>().Result;
 
-            var intentName = requestData?.request?.intent?.name;
+            var intentName = requestData?.Request?.Intent?.Name;
             var outputSpeech = "Hello Liam";
-            var response = AlexaServiceResponse.CreateOutputSpeechResponse(intentName, outputSpeech);
+            var response = CreateOutputSpeechResponse(intentName, outputSpeech);
 
             return req.CreateResponse(HttpStatusCode.OK, response);
+        }
+
+        public static AlexaAPI.Response.SkillResponse CreateOutputSpeechResponse(string intent, string outputSpeech)
+        {
+            var response = new AlexaAPI.Response.SkillResponse
+            {
+                Version = "1.1",
+                SessionAttributes = new Dictionary<string, object>(),
+                Response = new AlexaAPI.Response.ResponseBody
+                {
+                    OutputSpeech = new AlexaAPI.Response.PlainTextOutputSpeech
+                    {
+                        Text = outputSpeech
+                    },
+                    Card = new AlexaAPI.Response.SimpleCard()
+                    {
+                        Title = intent,
+                        Content = outputSpeech
+                    },
+                    ShouldEndSession = true
+                }
+            };
+
+            return response;
         }
     }
 }
