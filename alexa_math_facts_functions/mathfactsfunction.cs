@@ -30,7 +30,7 @@ namespace alexa_math_facts_functions
         {
             var response = new AlexaAPI.Response.SkillResponse
             {
-                Version = "1.1",
+                Version = "1.0",
                 SessionAttributes = new Dictionary<string, object>(),
                 Response = new AlexaAPI.Response.ResponseBody
                 {
