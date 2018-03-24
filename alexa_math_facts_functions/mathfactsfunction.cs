@@ -21,7 +21,7 @@ namespace alexa_math_facts_functions
 
             var intentName = requestData?.Request?.Intent?.Name;
             var outputSpeech = "Hello Liam";
-            var response = CreateOutputSpeechResponse(intentName, outputSpeech);
+            var response = CreateOutputSpeechResponse2(intentName, outputSpeech);
 
             return req.CreateResponse(HttpStatusCode.OK, response);
         }
@@ -46,6 +46,13 @@ namespace alexa_math_facts_functions
                     ShouldEndSession = true
                 }
             };
+
+            return response;
+        }
+
+        public static MyFirstAlexaSkill.Application.AlexaServiceResponse CreateOutputSpeechResponse2(string intent, string outputSpeech)
+        {
+            var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateOutputSpeechResponse(intent, outputSpeech);
 
             return response;
         }
