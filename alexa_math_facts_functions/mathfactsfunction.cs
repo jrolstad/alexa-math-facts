@@ -34,40 +34,11 @@ namespace alexa_math_facts_functions
                 isEnd = true;
             }
             
-            var response = CreateOutputSpeechResponse2(intentName, outputSpeech,isEnd);
+            var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateOutputSpeechResponse(intentName, outputSpeech, isEnd);
 
             return req.CreateResponse(HttpStatusCode.OK, response);
         }
 
-        public static AlexaAPI.Response.SkillResponse CreateOutputSpeechResponse(string intent, string outputSpeech)
-        {
-            var response = new AlexaAPI.Response.SkillResponse
-            {
-                Version = "1.0",
-                SessionAttributes = new Dictionary<string, object>(),
-                Response = new AlexaAPI.Response.ResponseBody
-                {
-                    OutputSpeech = new AlexaAPI.Response.PlainTextOutputSpeech
-                    {
-                        Text = outputSpeech
-                    },
-                    Card = new AlexaAPI.Response.SimpleCard()
-                    {
-                        Title = intent,
-                        Content = outputSpeech
-                    },
-                    ShouldEndSession = true
-                }
-            };
 
-            return response;
-        }
-
-        public static MyFirstAlexaSkill.Application.AlexaServiceResponse CreateOutputSpeechResponse2(string intent, string outputSpeech, bool isEnd)
-        {
-            var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateOutputSpeechResponse(intent, outputSpeech, isEnd);
-
-            return response;
-        }
     }
 }
