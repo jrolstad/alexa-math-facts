@@ -22,12 +22,19 @@ namespace alexa_math_facts_functions
             var intentName = requestData?.Request?.Intent?.Name;
 
             var outputSpeech = "";
+            var isEnd = false;
             if (requestData.Session.New == true)
+            {
                 outputSpeech = $"ready set go get smatrt, {intentName}";
+                isEnd = false;
+            }
             else
-                outputSpeech = "Continue";
+            {
+                outputSpeech = "That is all";
+                isEnd = true;
+            }
             
-            var response = CreateOutputSpeechResponse2(intentName, outputSpeech);
+            var response = CreateOutputSpeechResponse2(intentName, outputSpeech,isEnd);
 
             return req.CreateResponse(HttpStatusCode.OK, response);
         }
@@ -56,9 +63,9 @@ namespace alexa_math_facts_functions
             return response;
         }
 
-        public static MyFirstAlexaSkill.Application.AlexaServiceResponse CreateOutputSpeechResponse2(string intent, string outputSpeech)
+        public static MyFirstAlexaSkill.Application.AlexaServiceResponse CreateOutputSpeechResponse2(string intent, string outputSpeech, bool isEnd)
         {
-            var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateOutputSpeechResponse(intent, outputSpeech);
+            var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateOutputSpeechResponse(intent, outputSpeech, isEnd);
 
             return response;
         }

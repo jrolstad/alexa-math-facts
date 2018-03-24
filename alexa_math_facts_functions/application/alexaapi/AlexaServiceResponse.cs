@@ -8,7 +8,7 @@ namespace MyFirstAlexaSkill.Application
 {
     public class AlexaServiceResponse
     {
-        public static AlexaServiceResponse CreateOutputSpeechResponse(string intent, string outputSpeech)
+        public static AlexaServiceResponse CreateOutputSpeechResponse(string intent, string outputSpeech, bool isEnd)
         {
             var response = new AlexaServiceResponse
             {
@@ -27,7 +27,7 @@ namespace MyFirstAlexaSkill.Application
                         title = intent,
                         content = outputSpeech
                     },
-                    shouldEndSession = true
+                    shouldEndSession = isEnd
                 }
             };
 
