@@ -25,7 +25,7 @@ namespace alexa_math_facts_functions
             var isEnd = false;
             if (requestData.Session.New == true)
             {
-                outputSpeech = $"ready set go get smatrt, {intentName}";
+                outputSpeech = $"ready set go get smart , {intentName}";
                 isEnd = false;
             }
             else
