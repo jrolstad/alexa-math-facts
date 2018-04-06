@@ -44,7 +44,8 @@ namespace alexa_math_facts_functions
             else
             {
                 var expectedAnswer = requestData.Session.Attributes["answer"];
-                outputSpeech = $"The answer is {expectedAnswer}";
+                var actualAnswer = requestData.Request.Intent.Slots["Answer"].Value;
+                outputSpeech = $"The answer is {expectedAnswer} and you said {actualAnswer}";
                 isEnd = true;
             }
             
