@@ -43,9 +43,19 @@ namespace alexa_math_facts_functions
             }
             else
             {
-                var expectedAnswer = requestData.Session.Attributes["answer"];
-                var actualAnswer = requestData.Request.Intent.Slots["Answer"].Value;
-                outputSpeech = $"The answer is {expectedAnswer} and you said {actualAnswer}";
+                if(intentName== "answer")
+                {
+                    var expectedAnswer = requestData.Session.Attributes["answer"];
+                    var actualAnswer = requestData.Request.Intent.Slots["Answer"].Value;
+                    outputSpeech = $"The answer is {expectedAnswer} and you said {actualAnswer}";
+                }
+                else
+                {
+                    var slots = string.Join(",", requestData.Request.Intent.Slots.Keys);
+                    outputSpeech = $"The intent is {intentName} and slot names are {slots}";    
+                }
+
+
                 isEnd = true;
             }
             
