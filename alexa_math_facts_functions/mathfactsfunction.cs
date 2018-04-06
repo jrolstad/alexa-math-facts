@@ -23,9 +23,19 @@ namespace alexa_math_facts_functions
 
             var outputSpeech = "";
             var isEnd = false;
+
             if (requestData.Session.New == true)
             {
-                outputSpeech = $"ready set go get smart , {intentName}";
+                if(intentName == "addittion")
+                {
+                    outputSpeech = $"5+5=";
+                }
+                if(intentName == "subtraction")
+                {
+                    outputSpeech = $"3-2=";
+                }
+
+
                 isEnd = false;
             }
             else
