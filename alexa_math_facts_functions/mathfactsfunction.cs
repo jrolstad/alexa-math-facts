@@ -22,17 +22,20 @@ namespace alexa_math_facts_functions
             var intentName = requestData?.Request?.Intent?.Name;
 
             var outputSpeech = "";
+            var answer = 0;
             var isEnd = false;
 
             if (requestData.Session.New == true)
             {
-                if(intentName == "addittion")
+                if(intentName == "addition")
                 {
-                    outputSpeech = $"5+5=";
+                    outputSpeech = $"5 plus 5 =";
+                    answer = 10;
                 }
                 if(intentName == "subtraction")
                 {
-                    outputSpeech = $"3-2=";
+                    outputSpeech = $"3 minus 2 =";
+                    answer = 1;
                 }
 
 
@@ -40,12 +43,13 @@ namespace alexa_math_facts_functions
             }
             else
             {
-                outputSpeech = "That is all";
+                var expectedAnswer = requestData.Session.Attributes["answer"];
+                outputSpeech = $"The answer is {expectedAnswer}";
                 isEnd = true;
             }
             
             var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateOutputSpeechResponse(intentName, outputSpeech, isEnd);
-
+            response.sessionAttributes.Add("answer", answer.ToString());
             return req.CreateResponse(HttpStatusCode.OK, response);
         }
 
