@@ -24,7 +24,8 @@ namespace alexa_math_facts_functions
 
             var outputSpeech = "";
             var answer = 10;
-            var isEnd = false;
+
+            var isEnd = intentName == "AMAZON.StopIntent";
 
             var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateRepromptResponse(intentName,"5 plus 5 =",false);
             response.sessionAttributes.Add("answer", answer.ToString());
