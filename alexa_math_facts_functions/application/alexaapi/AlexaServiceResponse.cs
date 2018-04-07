@@ -24,6 +24,17 @@ namespace MyFirstAlexaSkill.Application
                         }
 
                 },
+                outputSpeech = new OutputSpeech
+                {
+                    type = "PlainText",
+                    text = outputSpeech
+                },
+                card = new Card
+                {
+                  type = "Simple",
+                  title = intent,
+                  content = outputSpeech
+                },
                 shouldEndSession = isEnd
               }
           };
