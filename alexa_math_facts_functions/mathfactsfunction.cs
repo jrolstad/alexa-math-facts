@@ -18,67 +18,40 @@ namespace alexa_math_facts_functions
         {
 
             var requestData = req.Content.ReadAsAsync<AlexaAPI.Request.SkillRequest>().Result;
-
             var intentName = requestData?.Request?.Intent?.Name;
-            var isEnd = (intentName == "AMAZON.StopIntent");
 
-            if(isEnd)
+            switch (intentName)
             {
+                case "addition":{
+                    var outputSpeech = "5 plus 5 equals";
+                    var answer = 10;
+                    var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateQuestionResponse(intentName, outputSpeech, false);
+                    response.sessionAttributes.Add("answer", answer.ToString());
+                    return req.CreateResponse(HttpStatusCode.OK, response); 
+                } 
+                case "answer":{
+                        var expectedAnswer = requestData.Session.Attributes["answer"];
+                        var actualAnswer = requestData.Request.Intent.Slots["answerValue"];
 
-                var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateOutputSpeechResponse("", "Thank you for playing talking math facts", isEnd);
-                return req.CreateResponse(HttpStatusCode.OK, response);
-            }
-            else
-            {
-                var outputSpeech = "5 plus 5 equals";
-                var answer = 10;
-                var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateRepromptResponse(intentName, outputSpeech, isEnd);
-                response.sessionAttributes.Add("answer", answer.ToString());
-                return req.CreateResponse(HttpStatusCode.OK, response);
-            }
+                        var outputSpeech = "I don't know";
+                        if(expectedAnswer == actualAnswer)
+                        {
+                            outputSpeech = "Correct";
+                        }
+                        else
+                        {
+                            outputSpeech = $"Incorrect.  The correct answer is {expectedAnswer}.";
+                        }
 
-
-           /* if (requestData.Session.New == true)
-            {
-                if(intentName == "addition")
-                {
-                    outputSpeech = $"5 plus 5 =";
-                    answer = 10;
+                        var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateSpeechResponse(intentName, outputSpeech, true);
+                        return req.CreateResponse(HttpStatusCode.OK, response); 
                 }
-                if(intentName == "subtraction")
-                {
-                    outputSpeech = $"3 minus 2 =";
-                    answer = 1;
+                default:{
+                    var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateSpeechResponse(intentName, "Thank you for playing talking math facts", true);
+                    return req.CreateResponse(HttpStatusCode.OK, response);
                 }
-
-
-                isEnd = false;
             }
-            else
-            {
-                
-                var slots = string.Join(",", requestData.Request.Intent?.Slots?.Keys);
-                outputSpeech = $"The intent is {intentName} and slot names are {slots}"; 
 
-
-                isEnd = true;
-            }
-            
-            var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateOutputSpeechResponse(intentName, outputSpeech, isEnd);
-            response.sessionAttributes.Add("answer", answer.ToString());
-
-            if (isEnd == false)
-            {
-                response.response.reprompt = new MyFirstAlexaSkill.Application.Reprompt 
-                { 
-                    outputSpeech = new MyFirstAlexaSkill.Application.OutputSpeech
-                    {
-                        type = "PlainText",
-                        text = ""
-                    },
-                };
-            }
-            */
         }
 
 
