@@ -22,12 +22,12 @@ namespace alexa_math_facts_functions
 
             var intentName = requestData?.Request?.Intent?.Name;
 
-            var outputSpeech = "";
+            var outputSpeech = "5 plus 5 equals";
             var answer = 10;
 
             var isEnd = intentName == "AMAZON.StopIntent";
 
-            var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateRepromptResponse(intentName,"5 plus 5 =",false);
+            var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateRepromptResponse(intentName,outputSpeech,isEnd);
             response.sessionAttributes.Add("answer", answer.ToString());
 
            /* if (requestData.Session.New == true)
