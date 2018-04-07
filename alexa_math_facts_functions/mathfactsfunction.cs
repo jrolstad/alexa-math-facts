@@ -18,17 +18,25 @@ namespace alexa_math_facts_functions
         {
 
             var requestData = req.Content.ReadAsAsync<AlexaAPI.Request.SkillRequest>().Result;
-         
 
             var intentName = requestData?.Request?.Intent?.Name;
+            var isEnd = (intentName == "AMAZON.StopIntent");
 
-            var outputSpeech = "5 plus 5 equals";
-            var answer = 10;
+            if(isEnd)
+            {
 
-            var isEnd = intentName == "AMAZON.StopIntent";
+                var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateOutputSpeechResponse("", "Thank you for playing talking math facts", isEnd);
+                return req.CreateResponse(HttpStatusCode.OK, response);
+            }
+            else
+            {
+                var outputSpeech = "5 plus 5 equals";
+                var answer = 10;
+                var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateRepromptResponse(intentName, outputSpeech, isEnd);
+                response.sessionAttributes.Add("answer", answer.ToString());
+                return req.CreateResponse(HttpStatusCode.OK, response);
+            }
 
-            var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateRepromptResponse(intentName,outputSpeech,isEnd);
-            response.sessionAttributes.Add("answer", answer.ToString());
 
            /* if (requestData.Session.New == true)
             {
@@ -71,8 +79,6 @@ namespace alexa_math_facts_functions
                 };
             }
             */
-                    
-            return req.CreateResponse(HttpStatusCode.OK, response);
         }
 
 
