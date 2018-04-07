@@ -43,15 +43,16 @@ namespace alexa_math_facts_functions
             }
             else
             {
+                
                 if(intentName== "answer")
                 {
                     var expectedAnswer = requestData.Session.Attributes["answer"];
-                    var actualAnswer = requestData.Request.Intent.Slots["Answer"].Value;
+                    var actualAnswer = requestData.Request.Intent?.Slots?["Answer"].Value;
                     outputSpeech = $"The answer is {expectedAnswer} and you said {actualAnswer}";
                 }
                 else
                 {
-                    var slots = string.Join(",", requestData.Request.Intent.Slots.Keys);
+                    var slots = string.Join(",", requestData.Request.Intent?.Slots?.Keys);
                     outputSpeech = $"The intent is {intentName} and slot names are {slots}";    
                 }
 
@@ -61,6 +62,13 @@ namespace alexa_math_facts_functions
             
             var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateOutputSpeechResponse(intentName, outputSpeech, isEnd);
             response.sessionAttributes.Add("answer", answer.ToString());
+
+            if (isEnd == false)
+            {
+                var directive = new MyFirstAlexaSkill.Application.Directive { type = "Dialog.Delegate" };
+                response.response.directives.Add(directive);
+            }
+                    
             return req.CreateResponse(HttpStatusCode.OK, response);
         }
 
