@@ -18,14 +18,18 @@ namespace alexa_math_facts_functions
         {
 
             var requestData = req.Content.ReadAsAsync<AlexaAPI.Request.SkillRequest>().Result;
+         
 
             var intentName = requestData?.Request?.Intent?.Name;
 
             var outputSpeech = "";
-            var answer = 0;
+            var answer = 10;
             var isEnd = false;
 
-            if (requestData.Session.New == true)
+            var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateRepromptResponse(intentName,"5 plus 5 =",false);
+            response.sessionAttributes.Add("answer", answer.ToString());
+
+           /* if (requestData.Session.New == true)
             {
                 if(intentName == "addition")
                 {
@@ -44,17 +48,8 @@ namespace alexa_math_facts_functions
             else
             {
                 
-                if(intentName== "answer")
-                {
-                    var expectedAnswer = requestData.Session.Attributes["answer"];
-                    var actualAnswer = requestData.Request.Intent?.Slots?["Answer"].Value;
-                    outputSpeech = $"The answer is {expectedAnswer} and you said {actualAnswer}";
-                }
-                else
-                {
-                    var slots = string.Join(",", requestData.Request.Intent?.Slots?.Keys);
-                    outputSpeech = $"The intent is {intentName} and slot names are {slots}";    
-                }
+                var slots = string.Join(",", requestData.Request.Intent?.Slots?.Keys);
+                outputSpeech = $"The intent is {intentName} and slot names are {slots}"; 
 
 
                 isEnd = true;
@@ -65,9 +60,16 @@ namespace alexa_math_facts_functions
 
             if (isEnd == false)
             {
-                var directive = new MyFirstAlexaSkill.Application.Directive { type = "Dialog.Delegate" };
-                response.response.directives.Add(directive);
+                response.response.reprompt = new MyFirstAlexaSkill.Application.Reprompt 
+                { 
+                    outputSpeech = new MyFirstAlexaSkill.Application.OutputSpeech
+                    {
+                        type = "PlainText",
+                        text = ""
+                    },
+                };
             }
+            */
                     
             return req.CreateResponse(HttpStatusCode.OK, response);
         }

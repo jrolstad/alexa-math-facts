@@ -8,6 +8,28 @@ namespace MyFirstAlexaSkill.Application
 {
     public class AlexaServiceResponse
     {
+        public static AlexaServiceResponse CreateRepromptResponse(string intent, string outputSpeech, bool isEnd)
+        {
+            var response = new AlexaServiceResponse
+          {
+              version = "1.1",
+              sessionAttributes = new Dictionary<string, string>(),
+              response = new Response
+              {
+                reprompt = new Reprompt{
+                        outputSpeech = new OutputSpeech
+                        {
+                            type = "PlainText",
+                            text = outputSpeech
+                        }
+
+                },
+                shouldEndSession = isEnd
+              }
+          };
+
+            return response;  
+        }
         public static AlexaServiceResponse CreateOutputSpeechResponse(string intent, string outputSpeech, bool isEnd)
         {
             var response = new AlexaServiceResponse
