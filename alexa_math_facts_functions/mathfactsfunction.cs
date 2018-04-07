@@ -30,8 +30,8 @@ namespace alexa_math_facts_functions
                     return req.CreateResponse(HttpStatusCode.OK, response); 
                 } 
                 case "answer":{
-                        var expectedAnswer = requestData.Session.Attributes["answer"];
-                        var actualAnswer = requestData.Request.Intent.Slots["answerValue"];
+                        var expectedAnswer = requestData.Session.Attributes["answer"] as string;
+                        var actualAnswer = requestData.Request.Intent.Slots["answerValue"].Value;
 
                         var outputSpeech = "I don't know";
                         if(expectedAnswer == actualAnswer)
@@ -40,7 +40,7 @@ namespace alexa_math_facts_functions
                         }
                         else
                         {
-                            outputSpeech = $"Incorrect.  The correct answer is {expectedAnswer}.";
+                            outputSpeech = $"Incorrect.  The correct answer is {expectedAnswer} and you said {actualAnswer}.";
                         }
 
                         var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateSpeechResponse(intentName, outputSpeech, true);
