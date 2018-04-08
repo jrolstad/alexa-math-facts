@@ -92,7 +92,7 @@ namespace alexa_math_facts_functions
         public static Question GetNextQuestion(QuestionType questionType)
         {
             var random = new System.Random();
-            var questionNumber = random.Next(0, 4);
+            var questionNumber = random.Next(0, 11);
 
             switch (questionType)
             {
@@ -111,19 +111,33 @@ namespace alexa_math_facts_functions
 
         private static List<Question> AdditionQuestions = new List<Question> 
         { 
-            new Question{Problem="5 plus 5 =",Answer = 10},
-            new Question{Problem="5 plus 2 =",Answer = 7},
+            new Question{Problem="9 plus 8 =",Answer = 17},
+            new Question{Problem="5 plus 4 =",Answer = 9},
+            new Question{Problem="4 plus 4 =",Answer = 8},
             new Question{Problem="9 plus 6 =",Answer = 15},
-            new Question{Problem="8 plus 3 =",Answer = 11},
-            new Question{Problem="2 plus 1 =",Answer = 3},
+            new Question{Problem="5 plus 5 =",Answer = 10},
+            new Question{Problem="8 plus 6 =",Answer = 14},
+            new Question{Problem="3 plus 7 =",Answer = 10},
+            new Question{Problem="7 plus 5 =",Answer = 12},
+            new Question{Problem="4 plus 5 =",Answer = 9},
+            new Question{Problem="4 plus 9 =",Answer = 13},
+            new Question{Problem="3 plus 8 =",Answer = 11},
+            new Question{Problem="5 plus 9 =",Answer = 14},
         };
         private static List<Question> SubtractionQuestions = new List<Question>
         {
-            new Question{Problem="8 minus 2 =",Answer = 6},
-            new Question{Problem="9 minus 7 =",Answer = 2},
-            new Question{Problem="12 minus 9 =",Answer = 3},
-            new Question{Problem="5 minus 2 =",Answer = 3},
-            new Question{Problem="2 minus 0 =",Answer = 2},
+            new Question{Problem="9 minus 5 =",Answer = 4},
+            new Question{Problem="16 minus 7 =",Answer = 9},
+            new Question{Problem="7 minus 4 =",Answer = 3},
+            new Question{Problem="13 minus 4 =",Answer = 9},
+            new Question{Problem="18 minus 9 =",Answer = 9},
+            new Question{Problem="14 minus 8 =",Answer = 6},
+            new Question{Problem="9 minus 3 =",Answer = 6},
+            new Question{Problem="15 minus 7 =",Answer = 8},
+            new Question{Problem="10 minus 4 =",Answer = 6},
+            new Question{Problem="11 minus 8 =",Answer = 3},
+            new Question{Problem="11 minus 6 =",Answer = 5},
+            new Question{Problem="12 minus 3 =",Answer = 9},
         };
         private static List<Question> MultiplicationQuestions = new List<Question>();
         private static List<Question> DivisionQuestions = new List<Question>();
