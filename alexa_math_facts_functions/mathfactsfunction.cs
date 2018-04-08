@@ -4,6 +4,7 @@ using System.Net.Http;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
+using alexa_math_facts_functions.application;
 
 namespace alexa_math_facts_functions
 {
@@ -18,20 +19,20 @@ namespace alexa_math_facts_functions
         {
 
             var requestData = req.Content.ReadAsAsync<AlexaAPI.Request.SkillRequest>().Result;
-            var intentName = requestData?.Request?.Intent?.Name;
+            var intentName = requestData.GetIntentName();
 
             switch (intentName)
             {
                 case "addition":{
                     var outputSpeech = "5 plus 5 equals";
-                    var answer = 10;
                     var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateQuestionResponse(intentName, outputSpeech, false);
-                    response.sessionAttributes.Add("answer", answer.ToString());
+                    response.SetAnswer(10);
+
                     return req.CreateResponse(HttpStatusCode.OK, response); 
                 } 
                 case "answer":{
-                        var expectedAnswer = requestData.Session.Attributes["answer"] as string;
-                        var actualAnswer = requestData.Request.Intent.Slots["answerValue"].Value;
+                        var expectedAnswer = requestData.GetExpectedAnswer();
+                        var actualAnswer = requestData.GetActualAnswer();
 
                         var outputSpeech = "I don't know";
                         if(expectedAnswer == actualAnswer)
@@ -40,7 +41,7 @@ namespace alexa_math_facts_functions
                         }
                         else
                         {
-                            outputSpeech = $"Incorrect.  The correct answer is {expectedAnswer} and you said {actualAnswer}.";
+                            outputSpeech = $"Incorrect.  The correct answer is {expectedAnswer}.";
                         }
 
                         var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateSpeechResponse(intentName, outputSpeech, true);
