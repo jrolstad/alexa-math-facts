@@ -23,7 +23,7 @@ namespace alexa_math_facts_functions.application
             return slot?.Value;
         }
 
-        public static void SetAnswer(this MyFirstAlexaSkill.Application.AlexaServiceResponse response, int answer)
+        public static void SetExpectedAnswer(this MyFirstAlexaSkill.Application.AlexaServiceResponse response, int answer)
         {
             response.sessionAttributes.Add("answer", answer.ToString());
         }
