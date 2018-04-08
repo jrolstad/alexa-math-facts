@@ -21,4 +21,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="application\EmptyClass.cs" />
+  </ItemGroup>
 </Project>

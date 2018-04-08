@@ -27,5 +27,23 @@ namespace alexa_math_facts_functions.application
         {
             response.sessionAttributes.Add("answer", answer.ToString());
         }
+
+        public static QuestionType GetQuestionType(this AlexaAPI.Request.SkillRequest request)
+        {
+            object sessionValue = null;
+            request.Session.Attributes.TryGetValue("questionType", out sessionValue);
+
+            var questionType = sessionValue as string;
+            QuestionType value;
+
+            var resolvedValue = Enum.TryParse<QuestionType>(questionType, out value);
+
+            return value;
+        }
+
+        public static void SetQuestionType(this MyFirstAlexaSkill.Application.AlexaServiceResponse response, QuestionType type)
+        {
+            response.sessionAttributes.Add("questionType", type.ToString());
+        }
     }
 }
