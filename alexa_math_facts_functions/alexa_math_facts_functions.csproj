@@ -23,5 +23,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="application\EmptyClass.cs" />
+    <Compile Remove="application\:Users:jrolstad:Documents:github:jrolstad:alexa-math-facts:alexa_math_facts_functions:application:EmptyClass.cs" />
   </ItemGroup>
 </Project>
