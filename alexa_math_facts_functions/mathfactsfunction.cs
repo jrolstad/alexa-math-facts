@@ -44,18 +44,18 @@ namespace alexa_math_facts_functions
                         string outputSpeech = null;
                         if(expectedAnswer == actualAnswer)
                         {
-                            outputSpeech = "Correct.";
+                            outputSpeech = "Correct. ";
                         }
                         else
                         {
-                            outputSpeech = $"Incorrect.  The correct answer is {expectedAnswer}.";
+                            outputSpeech = $"Incorrect.  The correct answer is {expectedAnswer}. ";
                         }
 
                         var questionType = requestData.GetQuestionType();
                         var nextQuestion = GetNextQuestion(questionType);
-                        outputSpeech += nextQuestion.Problem;
+                        outputSpeech += ("The next question is " + nextQuestion.Problem);
 
-                        var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateSpeechResponse(intentName, outputSpeech, true);
+                        var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateQuestionResponse(intentName, outputSpeech, false);
                         response.SetExpectedAnswer(nextQuestion.Answer);
                         response.SetQuestionType(questionType);
 
