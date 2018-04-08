@@ -26,7 +26,7 @@ namespace alexa_math_facts_functions
                 case "addition":{
                     var outputSpeech = "5 plus 5 equals";
                     var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateQuestionResponse(intentName, outputSpeech, false);
-                    response.SetAnswer(10);
+                    response.SetExpectedAnswer(10);
 
                     return req.CreateResponse(HttpStatusCode.OK, response); 
                 } 
