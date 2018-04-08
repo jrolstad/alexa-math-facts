@@ -25,7 +25,7 @@ namespace alexa_math_facts_functions
             {
                 case "addition":
                     {
-                        var outputSpeech = "Welcome to addition math facts.  Let's start with the first question.";
+                        var outputSpeech = "Welcome to addition math facts.  Let's start with the first question. ";
 
                         var question = GetNextQuestion(QuestionType.Addition);
                         outputSpeech += question.Problem;
@@ -33,6 +33,19 @@ namespace alexa_math_facts_functions
                         var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateQuestionResponse(intentName, outputSpeech, false);
                         response.SetExpectedAnswer(question.Answer);
                         response.SetQuestionType(QuestionType.Addition);
+
+                        return req.CreateResponse(HttpStatusCode.OK, response); 
+                    } 
+                case "subtraction":
+                    {
+                        var outputSpeech = "Welcome to subtraction math facts.  Let's start with the first question. ";
+
+                        var question = GetNextQuestion(QuestionType.Subtraction);
+                        outputSpeech += question.Problem;
+
+                        var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateQuestionResponse(intentName, outputSpeech, false);
+                        response.SetExpectedAnswer(question.Answer);
+                        response.SetQuestionType(QuestionType.Subtraction);
 
                         return req.CreateResponse(HttpStatusCode.OK, response); 
                     } 
