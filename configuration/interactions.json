@@ -1,0 +1,79 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "talking math facts",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "addition",
+                    "slots": [],
+                    "samples": [
+                        "do addition",
+                        "do my addition facts",
+                        "addition",
+                        "addition math facts",
+                        "do my addition math facts"
+                    ]
+                },
+                {
+                    "name": "subtraction",
+                    "slots": [],
+                    "samples": [
+                        "do subtraction",
+                        "do my subtraction facts",
+                        "subtraction",
+                        "subtraction math facts",
+                        "do my subtraction math facts "
+                    ]
+                },
+                {
+                    "name": "multiplication",
+                    "slots": [],
+                    "samples": [
+                        "do multiplication",
+                        "do my multiplication facts",
+                        "multiplication",
+                        "multiplacation math facts",
+                        "do my multiplication math facts"
+                    ]
+                },
+                {
+                    "name": "division",
+                    "slots": [],
+                    "samples": [
+                        "do division",
+                        "do my division facts",
+                        "divison",
+                        "division math facts",
+                        "do my division math facts"
+                    ]
+                },
+                {
+                    "name": "answer",
+                    "slots": [
+                        {
+                            "name": "answerValue",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "{answerValue}",
+                        "what is {answerValue}"
+                    ]
+                }
+            ],
+            "types": []
+        }
+    }
+}
