@@ -36,7 +36,7 @@ namespace alexa_math_facts_functions.application
             var questionType = sessionValue as string;
             QuestionType value;
 
-            var resolvedValue = Enum.TryParse<QuestionType>(questionType, out value);
+            Enum.TryParse<QuestionType>(questionType, out value);
 
             return value;
         }
@@ -44,6 +44,43 @@ namespace alexa_math_facts_functions.application
         public static void SetQuestionType(this MyFirstAlexaSkill.Application.AlexaServiceResponse response, QuestionType type)
         {
             response.sessionAttributes.Add("questionType", type.ToString());
+        }
+
+        public static MyFirstAlexaSkill.Application.AlexaServiceResponse WithQuestionResponse(this AlexaAPI.Request.SkillRequest request, 
+            Question question,
+            string speech)
+        {
+            var intentName = request.GetIntentName();
+            var outputSpeech = speech + question.Problem;
+
+            var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateQuestionResponse(intentName, outputSpeech, false);
+            response.SetExpectedAnswer(question.Answer);
+            response.SetQuestionType(question.Type);
+
+            return response;
+        }
+
+        public static MyFirstAlexaSkill.Application.AlexaServiceResponse WithRepromptResponse(this AlexaAPI.Request.SkillRequest request,
+            string speech)
+        {
+            var intentName = request.GetIntentName();
+            var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateQuestionResponse(intentName, speech, false);
+
+            return response;
+        }
+
+        public static MyFirstAlexaSkill.Application.AlexaServiceResponse WithSpeechResponse(this AlexaAPI.Request.SkillRequest request, string speech)
+        {
+            var intentName = request.GetIntentName();
+            var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateSpeechResponse(intentName, "speech", true);
+            return response;
+        }
+
+        public static string WithQuestion(this string speech, Question question)
+        {
+            var speechWithQuestion = speech + question.Problem;
+
+            return speechWithQuestion;
         }
     }
 }

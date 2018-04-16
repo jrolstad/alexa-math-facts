@@ -5,6 +5,7 @@ namespace alexa_math_facts_functions.application
     {
         public string Problem { get; set; }
         public int Answer { get; set; }
+        public QuestionType Type { get; set; }
     }
 
     public enum QuestionType

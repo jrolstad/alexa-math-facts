@@ -25,64 +25,56 @@ namespace alexa_math_facts_functions
             {
                 case "addition":
                     {
-                        var outputSpeech = "Welcome to addition math facts.  Let's start with the first question. ";
-
                         var question = GetNextQuestion(QuestionType.Addition);
-                        outputSpeech += question.Problem;
 
-                        var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateQuestionResponse(intentName, outputSpeech, false);
-                        response.SetExpectedAnswer(question.Answer);
-                        response.SetQuestionType(QuestionType.Addition);
+                        var message = "Welcome to addition math facts.  Let's start with the first question. ";
+                        var outputSpeech = message.WithQuestion(question);
 
+                        var response = requestData.WithQuestionResponse(question, outputSpeech);
                         return req.CreateResponse(HttpStatusCode.OK, response); 
                     } 
                 case "subtraction":
                     {
-                        var outputSpeech = "Welcome to subtraction math facts.  Let's start with the first question. ";
-
                         var question = GetNextQuestion(QuestionType.Subtraction);
-                        outputSpeech += question.Problem;
 
-                        var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateQuestionResponse(intentName, outputSpeech, false);
-                        response.SetExpectedAnswer(question.Answer);
-                        response.SetQuestionType(QuestionType.Subtraction);
+                        var message = "Welcome to subtraction math facts.  Let's start with the first question. ";
+                        var outputSpeech = message.WithQuestion(question);
 
+                        var response = requestData.WithQuestionResponse(question, outputSpeech);
                         return req.CreateResponse(HttpStatusCode.OK, response); 
                     } 
                 case "answer":
                     {
                         var expectedAnswer = requestData.GetExpectedAnswer();
                         var actualAnswer = requestData.GetActualAnswer();
+                        var questionType = requestData.GetQuestionType();
 
-                        string outputSpeech = null;
-                        if(expectedAnswer == actualAnswer)
+                        var nextQuestion = GetNextQuestion(questionType);
+
+                        var isAnswerCorrect = expectedAnswer == actualAnswer;
+                        if (isAnswerCorrect)
                         {
-                            outputSpeech = "Correct. ";
+                            var outputSpeech = $"Correct.  The next question is ";
+                            var response = requestData.WithQuestionResponse(nextQuestion, outputSpeech);
+                            return req.CreateResponse(HttpStatusCode.OK, response);
                         }
                         else
                         {
-                            outputSpeech = $"Incorrect.  The correct answer is {expectedAnswer}. ";
+                            var outputSpeech = $"Incorrect.  The correct answer is {expectedAnswer}. The next question is ";
+                            var response = requestData.WithQuestionResponse(nextQuestion, outputSpeech);
+                            return req.CreateResponse(HttpStatusCode.OK, response);
                         }
-
-                        var questionType = requestData.GetQuestionType();
-                        var nextQuestion = GetNextQuestion(questionType);
-                        outputSpeech += ("The next question is " + nextQuestion.Problem);
-
-                        var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateQuestionResponse(intentName, outputSpeech, false);
-                        response.SetExpectedAnswer(nextQuestion.Answer);
-                        response.SetQuestionType(questionType);
-
-                        return req.CreateResponse(HttpStatusCode.OK, response); 
-                }
+                        
+                    }
                 case "AMAZON.CancelIntent":
                 case "AMAZON.StopIntent":
                     {
-                        var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateSpeechResponse(intentName, "Thank you for playing talking math facts. Goodbye.", true);
+                        var response = requestData.WithSpeechResponse("Thank you for playing talking math facts. Goodbye.");
                         return req.CreateResponse(HttpStatusCode.OK, response);
                     }
                 default:
                     {
-                        var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateSpeechResponse(intentName, "Unknown command.  Please try addition, subtraction, multiplication, or division.", true);
+                        var response = requestData.WithRepromptResponse("Unknown command.  Please try addition, subtraction, multiplication, or division.");
                         return req.CreateResponse(HttpStatusCode.OK, response);
                     }
             }
@@ -109,38 +101,38 @@ namespace alexa_math_facts_functions
             }
         }
 
-        private static List<Question> AdditionQuestions = new List<Question> 
+        private static readonly List<Question> AdditionQuestions = new List<Question> 
         { 
-            new Question{Problem="9 plus 8 =",Answer = 17},
-            new Question{Problem="5 plus 4 =",Answer = 9},
-            new Question{Problem="4 plus 4 =",Answer = 8},
-            new Question{Problem="9 plus 6 =",Answer = 15},
-            new Question{Problem="5 plus 5 =",Answer = 10},
-            new Question{Problem="8 plus 6 =",Answer = 14},
-            new Question{Problem="3 plus 7 =",Answer = 10},
-            new Question{Problem="7 plus 5 =",Answer = 12},
-            new Question{Problem="4 plus 5 =",Answer = 9},
-            new Question{Problem="4 plus 9 =",Answer = 13},
-            new Question{Problem="3 plus 8 =",Answer = 11},
-            new Question{Problem="5 plus 9 =",Answer = 14},
+            new Question{Problem="9 plus 8 =",Answer = 17,Type=QuestionType.Addition},
+            new Question{Problem="5 plus 4 =",Answer = 9,Type=QuestionType.Addition},
+            new Question{Problem="4 plus 4 =",Answer = 8,Type=QuestionType.Addition},
+            new Question{Problem="9 plus 6 =",Answer = 15,Type=QuestionType.Addition},
+            new Question{Problem="5 plus 5 =",Answer = 10,Type=QuestionType.Addition},
+            new Question{Problem="8 plus 6 =",Answer = 14,Type=QuestionType.Addition},
+            new Question{Problem="3 plus 7 =",Answer = 10,Type=QuestionType.Addition},
+            new Question{Problem="7 plus 5 =",Answer = 12,Type=QuestionType.Addition},
+            new Question{Problem="4 plus 5 =",Answer = 9,Type=QuestionType.Addition},
+            new Question{Problem="4 plus 9 =",Answer = 13,Type=QuestionType.Addition},
+            new Question{Problem="3 plus 8 =",Answer = 11,Type=QuestionType.Addition},
+            new Question{Problem="5 plus 9 =",Answer = 14,Type=QuestionType.Addition},
         };
-        private static List<Question> SubtractionQuestions = new List<Question>
+        private static readonly List<Question> SubtractionQuestions = new List<Question>
         {
-            new Question{Problem="9 minus 5 =",Answer = 4},
-            new Question{Problem="16 minus 7 =",Answer = 9},
-            new Question{Problem="7 minus 4 =",Answer = 3},
-            new Question{Problem="13 minus 4 =",Answer = 9},
-            new Question{Problem="18 minus 9 =",Answer = 9},
-            new Question{Problem="14 minus 8 =",Answer = 6},
-            new Question{Problem="9 minus 3 =",Answer = 6},
-            new Question{Problem="15 minus 7 =",Answer = 8},
-            new Question{Problem="10 minus 4 =",Answer = 6},
-            new Question{Problem="11 minus 8 =",Answer = 3},
-            new Question{Problem="11 minus 6 =",Answer = 5},
-            new Question{Problem="12 minus 3 =",Answer = 9},
+            new Question{Problem="9 minus 5 =",Answer = 4,Type=QuestionType.Subtraction},
+            new Question{Problem="16 minus 7 =",Answer = 9,Type=QuestionType.Subtraction},
+            new Question{Problem="7 minus 4 =",Answer = 3,Type=QuestionType.Subtraction},
+            new Question{Problem="13 minus 4 =",Answer = 9,Type=QuestionType.Subtraction},
+            new Question{Problem="18 minus 9 =",Answer = 9,Type=QuestionType.Subtraction},
+            new Question{Problem="14 minus 8 =",Answer = 6,Type=QuestionType.Subtraction},
+            new Question{Problem="9 minus 3 =",Answer = 6,Type=QuestionType.Subtraction},
+            new Question{Problem="15 minus 7 =",Answer = 8,Type=QuestionType.Subtraction},
+            new Question{Problem="10 minus 4 =",Answer = 6,Type=QuestionType.Subtraction},
+            new Question{Problem="11 minus 8 =",Answer = 3,Type=QuestionType.Subtraction},
+            new Question{Problem="11 minus 6 =",Answer = 5,Type=QuestionType.Subtraction},
+            new Question{Problem="12 minus 3 =",Answer = 9,Type=QuestionType.Subtraction},
         };
-        private static List<Question> MultiplicationQuestions = new List<Question>();
-        private static List<Question> DivisionQuestions = new List<Question>();
+        private static readonly List<Question> MultiplicationQuestions = new List<Question>();
+        private static readonly List<Question> DivisionQuestions = new List<Question>();
 
     }
 }
