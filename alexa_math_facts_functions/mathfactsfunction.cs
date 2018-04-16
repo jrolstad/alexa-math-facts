@@ -27,8 +27,7 @@ namespace alexa_math_facts_functions
                     {
                         var question = GetNextQuestion(QuestionType.Addition);
 
-                        var message = "Welcome to addition math facts.  Let's start with the first question. ";
-                        var outputSpeech = message.WithQuestion(question);
+                        var outputSpeech = "Welcome to addition math facts.  Let's start with the first question. ";
 
                         var response = requestData.WithQuestionResponse(question, outputSpeech);
                         return req.CreateResponse(HttpStatusCode.OK, response); 
@@ -37,8 +36,7 @@ namespace alexa_math_facts_functions
                     {
                         var question = GetNextQuestion(QuestionType.Subtraction);
 
-                        var message = "Welcome to subtraction math facts.  Let's start with the first question. ";
-                        var outputSpeech = message.WithQuestion(question);
+                        var outputSpeech = "Welcome to subtraction math facts.  Let's start with the first question. ";
 
                         var response = requestData.WithQuestionResponse(question, outputSpeech);
                         return req.CreateResponse(HttpStatusCode.OK, response); 
