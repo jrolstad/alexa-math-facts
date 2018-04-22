@@ -17,12 +17,17 @@ namespace alexa_math_facts_functions.application
 
         public static int GetNumberOfQuestionsAsked(this AlexaAPI.Request.SkillRequest request)
         {
-            object answer = null;
-            request.Session.Attributes.TryGetValue("numberOfQuestionsAsked", out answer);
-            if (answer == null)
+
+            if (request.Session?.Attributes?.ContainsKey("numberOfQuestionsAsked") == false)
+            {
+                var number = request.Session?.Attributes?["numberOfQuestionsAsked"];
+                return Int32.Parse(number.ToString());
+            }
+            else
+            {
                 return 0;
-            
-            return Int32.Parse(answer?.ToString());
+            }
+        
         }
 
         public static void SetNumberOfQuestionsAsked(this MyFirstAlexaSkill.Application.AlexaServiceResponse response, int numberAsked)
