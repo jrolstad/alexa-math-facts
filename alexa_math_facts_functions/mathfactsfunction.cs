@@ -50,14 +50,26 @@ namespace alexa_math_facts_functions
                         var nextQuestion = GetNextQuestion(questionType);
 
                         var isAnswerCorrect = expectedAnswer == actualAnswer;
+                        var numberofquestiensaswerd = requestData.GetNumberOfQuestionsAsked();
+
                         if (isAnswerCorrect)
                         {
+                            if(numberofquestiensaswerd>20)
+                            {
+                                var stopResponse = requestData.WithSpeechResponse("you have done 20 questions");
+                                return req.CreateResponse(HttpStatusCode.OK, stopResponse);
+                            }
                             var outputSpeech = $"Correct.  The next question is ";
                             var response = requestData.WithQuestionResponse(nextQuestion, outputSpeech);
                             return req.CreateResponse(HttpStatusCode.OK, response);
                         }
                         else
                         {
+                            if (numberofquestiensaswerd > 20)
+                            {
+                                var stopResponse = requestData.WithSpeechResponse("you have done 20 questions");
+                                return req.CreateResponse(HttpStatusCode.OK, stopResponse);
+                            }
                             var outputSpeech = $"Incorrect.  The correct answer is {expectedAnswer}. The next question is ";
                             var response = requestData.WithQuestionResponse(nextQuestion, outputSpeech);
                             return req.CreateResponse(HttpStatusCode.OK, response);

@@ -15,6 +15,21 @@ namespace alexa_math_facts_functions.application
             return answer as string;
         }
 
+        public static int GetNumberOfQuestionsAsked(this AlexaAPI.Request.SkillRequest request)
+        {
+            object answer = null;
+            request.Session.Attributes.TryGetValue("numberOfQuestionsAsked", out answer);
+            if (answer == null)
+                return 0;
+            
+            return Int32.Parse(answer?.ToString());
+        }
+
+        public static void SetNumberOfQuestionsAsked(this MyFirstAlexaSkill.Application.AlexaServiceResponse response, int numberAsked)
+        {
+            response.sessionAttributes.Add("numberOfQuestionsAsked", numberAsked.ToString());
+        }
+
         public static string GetActualAnswer(this AlexaAPI.Request.SkillRequest request)
         {
             AlexaAPI.Request.Slot slot = null;
@@ -57,6 +72,10 @@ namespace alexa_math_facts_functions.application
             response.SetExpectedAnswer(question.Answer);
             response.SetQuestionType(question.Type);
 
+            var numberOfQuestionsAsked = request.GetNumberOfQuestionsAsked();
+            numberOfQuestionsAsked += 1;
+            response.SetNumberOfQuestionsAsked(numberOfQuestionsAsked);
+
             return response;
         }
 
@@ -72,7 +91,7 @@ namespace alexa_math_facts_functions.application
         public static MyFirstAlexaSkill.Application.AlexaServiceResponse WithSpeechResponse(this AlexaAPI.Request.SkillRequest request, string speech)
         {
             var intentName = request.GetIntentName();
-            var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateSpeechResponse(intentName, "speech", true);
+            var response = MyFirstAlexaSkill.Application.AlexaServiceResponse.CreateSpeechResponse(intentName, speech, true);
             return response;
         }
 
