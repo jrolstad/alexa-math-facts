@@ -18,7 +18,7 @@ namespace alexa_math_facts_functions.application
         public static int GetNumberOfQuestionsAsked(this AlexaAPI.Request.SkillRequest request)
         {
 
-            if (request.Session?.Attributes?.ContainsKey("numberOfQuestionsAsked") == false)
+            if (request.Session?.Attributes?.ContainsKey("numberOfQuestionsAsked") == true)
             {
                 var number = request.Session?.Attributes?["numberOfQuestionsAsked"];
                 return Int32.Parse(number.ToString());
